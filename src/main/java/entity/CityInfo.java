@@ -27,13 +27,13 @@ import javax.validation.constraints.Size;
  * @author josephawwal
  */
 @Entity
-@Table(name = "cityinfo")
+@Table(name = "CITYINFO")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Cityinfo.findAll", query = "SELECT c FROM Cityinfo c"),
-    @NamedQuery(name = "Cityinfo.findByIdCityinfo", query = "SELECT c FROM Cityinfo c WHERE c.idCityinfo = :idCityinfo"),
-    @NamedQuery(name = "Cityinfo.findByCity", query = "SELECT c FROM Cityinfo c WHERE c.city = :city"),
-    @NamedQuery(name = "Cityinfo.findByZip", query = "SELECT c FROM Cityinfo c WHERE c.zip = :zip")})
+    @NamedQuery(name = "CityInfo.findAll", query = "SELECT c FROM CityInfo c"),
+    @NamedQuery(name = "CityInfo.findByIdCityinfo", query = "SELECT c FROM CityInfo c WHERE c.idCityInfo = :idCityInfo"),
+    @NamedQuery(name = "CityInfo.findByCity", query = "SELECT c FROM CityInfo c WHERE c.city = :city"),
+    @NamedQuery(name = "CityInfo.findByZip", query = "SELECT c FROM CityInfo c WHERE c.zip = :zip")})
 
 public class CityInfo implements Serializable {
 

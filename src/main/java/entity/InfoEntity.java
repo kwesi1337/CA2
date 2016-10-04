@@ -31,15 +31,15 @@ import javax.validation.constraints.Size;
  * @author josephawwal
  */
 @Entity
-@Table(name = "infoentity")
+@Table(name = "InfoEntity")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Infoentity.findAll", query = "SELECT i FROM Infoentity i"),
-    @NamedQuery(name = "Infoentity.findById", query = "SELECT i FROM Infoentity i WHERE i.id = :id"),
-    @NamedQuery(name = "Infoentity.findByDtype", query = "SELECT i FROM Infoentity i WHERE i.dtype = :dtype"),
-    @NamedQuery(name = "Infoentity.findByCompanyID", query = "SELECT i FROM Infoentity i WHERE i.companyID = :companyID"),
-    @NamedQuery(name = "Infoentity.findByEmail", query = "SELECT i FROM Infoentity i WHERE i.email = :email"),
-@NamedQuery(name = "Infoentity.findByPersonID", query = "SELECT i FROM Infoentity i WHERE i.personID = :personID")})
+    @NamedQuery(name = "InfoEntity.findAll", query = "SELECT i FROM InfoEntity i"),
+    @NamedQuery(name = "InfoEntity.findById", query = "SELECT i FROM InfoEntity i WHERE i.id = :id"),
+    @NamedQuery(name = "InfoEntity.findByDtype", query = "SELECT i FROM InfoEntity i WHERE i.dType = :dType"),
+    @NamedQuery(name = "InfoEntity.findByCompanyID", query = "SELECT i FROM InfoEntity i WHERE i.companyID = :companyID"),
+    @NamedQuery(name = "InfoEntity.findByEmail", query = "SELECT i FROM InfoEntity i WHERE i.email = :email"),
+@NamedQuery(name = "InfoEntity.findByPersonID", query = "SELECT i FROM InfoEntity i WHERE i.personID = :personID")})
 public class InfoEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -52,13 +52,13 @@ public class InfoEntity implements Serializable {
     @Size(max = 31)
     @Column(name = "DTYPE")
     private String dType;
-    @Column(name = "Company_ID")
-    private Integer companyId;
+    @Column(name = "companyID")
+    private Integer companyID;
     @Size(max = 255)
     @Column(name = "email")
     private String email;
-    @Column(name = "Person_ID")
-    private Integer personId;
+    @Column(name = "personID")
+    private Integer personID;
     @ManyToMany(mappedBy = "infoEntityList")
     private List<Hobby> hobbies;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "infoEntity")
@@ -140,15 +140,15 @@ public class InfoEntity implements Serializable {
         this.id = id;
     }
     
-    public InfoEntity(String dType, Integer companyId, String email,
-            Integer personId, List<Hobby> hobbies,
+    public InfoEntity(String dType, Integer companyID, String email,
+            Integer personID, List<Hobby> hobbies,
             Person person, List<Phone> phones, 
             Company company, Address address){
         
         this.dType = dType;
-        this.companyId = companyId;
+        this.companyID = companyID;
         this.email = email;
-        this.personId = personId;
+        this.personID = personID;
         this.hobbies = hobbies;
         this.person = person;
         this.phones = phones;
