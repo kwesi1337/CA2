@@ -5,120 +5,113 @@
  */
 package entity;
 
+import static entity.InfoEntity_.id;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Collection;
+import javax.persistence.Basic;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
+import org.hibernate.validator.NotNull;
+import org.hibernate.validator.Size;
 
 /**
  *
  * @author josephawwal
  */
 @Entity
+@Table(name = "hobby")
+@XmlRootElement
+@NamedQueries({
+      @NamedQuery(name = "Hobby.findAll", query = "SELECT h FROM Hobby h"),
+    @NamedQuery(name = "Hobby.findByIdHobby", query = "SELECT h FROM Hobby h WHERE h.idHobby = :idHobby"),
+    @NamedQuery(name = "Hobby.findByDescription", query = "SELECT h FROM Hobby h WHERE h.description = :description"),
+@NamedQuery(name = "Hobby.findByName", query = "SELECT h FROM Hobby h WHERE h.name = :name")})
+    
+    
 public class Hobby implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    
-    
-    
-    
-    private String name;
-    
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "idHobby")
+    private Integer idHobby;
+    @Size(max = 255)
+    @Column(name = "description")
     private String description;
+    @Size(max = 255)
+    @Column(name = "name")
+    private String name;
+    @JoinTable(name = "hobby_has_person", joinColumns = {
+       @JoinColumn(name = "Hobby_idHobby", referencedColumnName = "idHobby")}, inverseJoinColumns = {
+@JoinColumn(name = "Person_ID", referencedColumnName = "ID")})
     
-    @ManyToMany(mappedBy = "hobbies")
-    private List<Person> persons = new ArrayList();
-    
+    @ManyToMany
+    private Collection<InfoEntity> infoEntityCollection;
     
     public Hobby(){
         
-        
     }
     
-    public Hobby(String name, String description){
-        
-        this.name = name;
+    public Hobby(String description, String name, Collection<InfoEntity> infoEntityCollection)
+    {
         this.description = description;
-    }
-    
-    
-    public String getName(){
-        
-        return name;
-    }
-    
-    public void setName(String name){
-        
         this.name = name;
-    }
+        this.infoEntityCollection = infoEntityCollection;
+    }  
     
-    public String getDescription(){
+    private Hobby(Integer idHobby){
+        
+        this.idHobby = idHobby;
+    }
+
+    public Integer getIdHobby() {
+        return idHobby;
+    }
+
+    public void setIdHobby(Integer idHobby) {
+        this.idHobby = idHobby;
+    }
+
+    public String getDescription() {
         return description;
     }
-    
-    public void setDescription(String description){
-        
+
+    public void setDescription(String description) {
         this.description = description;
-        
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @XmlTransient
+    public Collection<InfoEntity> getInfoEntityCollection() {
+        return infoEntityCollection;
+    }
+
+    public void setInfoEntityCollection(Collection<InfoEntity> infoEntityCollection) {
+        this.infoEntityCollection = infoEntityCollection;
     }
     
-        public void addPerson(Person p){
-            
-            persons.add(p);
-        }
-        
-        public List<Person> getPersons(){
-            
-            return persons;
-        
-        
-    }
-        
-        public void setPersons(List<Person> persons){
-            
-            
-            this.persons = persons;
-        }
-        
-        
-    
-    
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
 
-    public Long getId() {
-        return id;
-    }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Hobby)) {
-            return false;
-        }
-        Hobby other = (Hobby) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
-    }
 
     @Override
     public String toString() {

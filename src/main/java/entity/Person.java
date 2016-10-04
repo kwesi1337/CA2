@@ -6,92 +6,114 @@
 package entity;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-import javax.persistence.CascadeType;
+import javax.persistence.Basic;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.JoinColumn;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlRootElement;
+import org.hibernate.validator.NotNull;
+import org.hibernate.validator.Size;
 
 /**
  *
  * @author josephawwal
  */
 @Entity
-public class Person implements Serializable {
+@Table(name = "person")
+@XmlRootElement
+@NamedQueries({
+    @NamedQuery(name = "Person.findAll", query = "SELECT p FROM Person p"),
+    @NamedQuery(name = "Person.findById", query = "SELECT p FROM Person p WHERE p.id = :id"),
+    @NamedQuery(name = "Person.findByFirstName", query = "SELECT p FROM Person p WHERE p.firstName = :firstName"),
+@NamedQuery(name = "Person.findByLastName", query = "SELECT p FROM Person p WHERE p.lastName = :lastName")})
 
+
+public class Person extends InfoEntity implements Serializable {
+    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "ID")
+    private Integer id;
+    @Size(max = 255)
+    @Column(name = "firstName")
     private String firstName;
+    @Size(max = 255)
+    @Column(name = "lastName")
     private String lastName;
-    
-    
-    @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.PERSIST})
-    private List<Hobby> hobbies = new ArrayList();
+    @JoinColumn(name = "ID", referencedColumnName = "ID", insertable = false, updatable = false)
+    @OneToOne(optional = false)
+    private InfoEntity infoEntity;
     
     public Person(){
         
         
-    }
-    
-    public Person(String firstName, String lastName){
-        
-        this.firstName = firstName;
-        this.lastName = lastName;
-    }
-    
-    public String getFirstName(){
-        
-        return firstName;
-    }
-    
-    public void setFirstName(String firstName){
-        
-        this.firstName = firstName;
-    }
-    
-    public String getLastName(){
-        
-        return lastName;
-    }
-    
-    public void setLastName(String lastName){
-        
-        this.lastName = lastName;
-    }
-    
-    public void addHobby(Hobby hobby){
-        
-        hobby.addPerson(this);
-        hobbies.add(hobby);
-    }
-    
-    public List<Hobby> getHobbies(){
-        
-        return hobbies;
-    }
-    public void setHobbies(List<Hobby> hobbies){
-        
-        this.hobbies = hobbies;
-    }
-    
-    public void clearHobbies(){
-        
-        hobbies.clear();
-        
-    }
-    private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
 
-    public Long getId() {
+    }
+    
+    public Person(String firstName, String lastName, InfoEntity infoEntity){
+        
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.infoEntity = infoEntity;
+    }
+    
+    public Person(Integer id){
+        
+        this.id = id;
+    }
+    
+    
+    public Person(Integer id, String firstName, String lastName, InfoEntity infoEntity){
+        
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.infoEntity = infoEntity;
+        
+    }
+
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public InfoEntity getInfoEntity() {
+        return infoEntity;
+    }
+
+    public void setInfoEntity(InfoEntity infoEntity) {
+        this.infoEntity = infoEntity;
+    }
+    
+    
 
     @Override
     public int hashCode() {
