@@ -5,7 +5,7 @@
  */
 package entity;
 
-import static entity.InfoEntity_.id;
+
 import java.io.Serializable;
 import java.util.Collection;
 import javax.persistence.Basic;
@@ -22,8 +22,8 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
-import org.hibernate.validator.NotNull;
-import org.hibernate.validator.Size;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 /**
  *
@@ -113,9 +113,6 @@ public class Hobby implements Serializable {
 
 
 
-    @Override
-    public String toString() {
-        return "entities.Hobby[ id=" + id + " ]";
-    }
+    
     
 }

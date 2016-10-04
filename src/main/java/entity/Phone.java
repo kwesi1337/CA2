@@ -18,8 +18,8 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
-import org.hibernate.validator.NotNull;
-import org.hibernate.validator.Size;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 /**
  *
@@ -47,7 +47,7 @@ public class Phone implements Serializable {
     @Column(name = "description")
     private String description;
     @Column(name = "number")
-    private Integer number;
+    private String number;
     @JoinColumn(name = "InfoEntity_idInfoEntity", referencedColumnName = "ID")
     @ManyToOne
     private InfoEntity infoEntity;
@@ -56,7 +56,7 @@ public class Phone implements Serializable {
         
     }
     
-    public Phone(String description, Integer number, InfoEntity infoEntity){
+    public Phone(String description, String number, InfoEntity infoEntity){
         
         this.description = description;
         this.number = number;
@@ -84,11 +84,11 @@ public class Phone implements Serializable {
         this.description = description;
     }
 
-    public Integer getNumber() {
+    public String getNumber() {
         return number;
     }
 
-    public void setNumber(Integer number) {
+    public void setNumber(String number) {
         this.number = number;
     }
 

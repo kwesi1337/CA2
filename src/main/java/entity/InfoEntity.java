@@ -7,6 +7,7 @@ package entity;
 
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -23,8 +24,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
-import org.hibernate.validator.NotNull;
-import org.hibernate.validator.Size;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 /**
  *
@@ -60,17 +61,74 @@ public class InfoEntity implements Serializable {
     @Column(name = "Person_ID")
     private Integer personId;
     @ManyToMany(mappedBy = "infoEntityCollection")
-    private Collection<Hobby> hobbyCollection;
+    private List<Hobby> hobbies;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "infoEntity")
     private Person person;
     @OneToMany(mappedBy = "infoEntityIdCollection")
-    private Collection<Phone> phoneCollection;
+    private List<Phone> phones;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "infoEntity")
     private Company company;
     @JoinColumn(name = "address_isAddress", referencedColumnName = "idAddress")
     @ManyToOne(optional = false)
-    private Address addressIs;
+    private Address address;
+
+    public void setHobby(List<Hobby> hobbies)
+    {
+        this.hobbies = hobbies;
+    }
+
+    public List<Hobby> getHobbies()
+    {
+        return hobbies;
+    }
+    
+     public void addHobby(Hobby hobby){
+        hobbies.add(hobby);
+    }
+
+    public void setId(Integer id)
+    {
+        this.id = id;
+    }
+
+    public void setEmail(String email)
+    {
+        this.email = email;
+    }
+
+    public void setPhones(List<Phone> phones)
+    {
+        this.phones = phones;
+    }
+
+    public void setAddress(Address address)
+    {
+        this.address = address;
+    }
+
+    public Integer getId()
+    {
+        return id;
+    }
+
+    public String getEmail()
+    {
+        return email;
+    }
+
+    public List<Phone> getPhones()
+    {
+        return phones;
+    }
+
+    public Address getAddress()
+    {
+        return address;
+    }
   
+    public void addPhoneNumber(Phone phone) {
+        phones.add(phone);
+    }
    
     
     public InfoEntity(){
@@ -84,19 +142,19 @@ public class InfoEntity implements Serializable {
     }
     
     public InfoEntity(String dType, Integer companyId, String email,
-            Integer personId, Collection<Hobby> hobbyCollection,
-            Person person, Collection<Phone> phoneCollection, 
-            Company company, Address addressIs){
+            Integer personId, List<Hobby> hobbies,
+            Person person, List<Phone> phones, 
+            Company company, Address address){
         
         this.dType = dType;
         this.companyId = companyId;
         this.email = email;
         this.personId = personId;
-        this.hobbyCollection = hobbyCollection;
+        this.hobbies = hobbies;
         this.person = person;
-        this.phoneCollection = phoneCollection;
+        this.phones = phones;
         this.company = company;
-        this.addressIs = addressIs;
+        this.address = address;
         
     }
     

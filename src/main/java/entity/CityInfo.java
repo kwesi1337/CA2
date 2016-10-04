@@ -6,7 +6,7 @@
 package entity;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -19,8 +19,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
-import org.hibernate.validator.NotNull;
-import org.hibernate.validator.Size;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 /**
  *
@@ -48,9 +48,9 @@ public class CityInfo implements Serializable {
     @Column(name = "City")
     private String city;
     @Column(name = "Zip")
-    private Integer zip;
+    private String zip;
     @OneToMany(mappedBy = "cityInfoCity")
-    private Collection<Address> addressCollection;
+    private List<Address> address;
     
    
 
@@ -58,11 +58,11 @@ public class CityInfo implements Serializable {
 
     }
 
-    public CityInfo(int zip, String city, Collection<Address> addressCollection) {
+    public CityInfo(String zip, String city, List<Address> address) {
         
         this.zip = zip;
         this.city = city;
-        this.addressCollection = addressCollection;
+        this.address = address;
         
     }
 
@@ -82,21 +82,21 @@ public class CityInfo implements Serializable {
         this.city = city;
     }
 
-    public Integer getZip() {
+    public String getZip() {
         return zip;
     }
 
-    public void setZip(Integer zip) {
+    public void setZip(String zip) {
         this.zip = zip;
     }
 
     @XmlTransient
-    public Collection<Address> getAddressCollection() {
-        return addressCollection;
+    public List<Address> getAddressCollection() {
+        return address;
     }
 
-    public void setAddressCollection(Collection<Address> addressCollection) {
-        this.addressCollection = addressCollection;
+    public void setAddressCollection(List<Address> addressCollection) {
+        this.address = addressCollection;
     }
   
 

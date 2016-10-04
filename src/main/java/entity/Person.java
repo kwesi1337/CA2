@@ -6,6 +6,7 @@
 package entity;
 
 import java.io.Serializable;
+import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,13 +14,14 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
-import org.hibernate.validator.NotNull;
-import org.hibernate.validator.Size;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 /**
  *
@@ -53,6 +55,9 @@ public class Person extends InfoEntity implements Serializable {
     @OneToOne(optional = false)
     private InfoEntity infoEntity;
     
+    @ManyToMany(mappedBy = "infoEntityCollection")
+    private Collection<Hobby> hobbyCollection;
+    
     public Person(){
         
         
@@ -81,10 +86,12 @@ public class Person extends InfoEntity implements Serializable {
         
     }
 
+    @Override
     public Integer getId() {
         return id;
     }
 
+    @Override
     public void setId(Integer id) {
         this.id = id;
     }
