@@ -6,7 +6,7 @@
 package entity;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -55,8 +55,8 @@ public class Person extends InfoEntity implements Serializable {
     @OneToOne(optional = false)
     private InfoEntity infoEntity;
     
-    @ManyToMany(mappedBy = "infoEntityCollection")
-    private Collection<Hobby> hobbyCollection;
+    @ManyToMany(mappedBy = "infoEntityList")
+    private List<Hobby> hobbyList;
     
     public Person(){
         

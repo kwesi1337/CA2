@@ -7,7 +7,7 @@ package entity;
 
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -59,17 +59,17 @@ public class Hobby implements Serializable {
 @JoinColumn(name = "Person_ID", referencedColumnName = "ID")})
     
     @ManyToMany
-    private Collection<InfoEntity> infoEntityCollection;
+    private List<InfoEntity> infoEntityList;
     
     public Hobby(){
         
     }
     
-    public Hobby(String description, String name, Collection<InfoEntity> infoEntityCollection)
+    public Hobby(String description, String name, List<InfoEntity> infoEntityList)
     {
         this.description = description;
         this.name = name;
-        this.infoEntityCollection = infoEntityCollection;
+        this.infoEntityList = infoEntityList;
     }  
     
     private Hobby(Integer idHobby){
@@ -102,12 +102,12 @@ public class Hobby implements Serializable {
     }
 
     @XmlTransient
-    public Collection<InfoEntity> getInfoEntityCollection() {
-        return infoEntityCollection;
+    public List<InfoEntity> getInfoEntityList() {
+        return infoEntityList;
     }
 
-    public void setInfoEntityCollection(Collection<InfoEntity> infoEntityCollection) {
-        this.infoEntityCollection = infoEntityCollection;
+    public void setInfoEntityList(List<InfoEntity> infoEntityList) {
+        this.infoEntityList = infoEntityList;
     }
     
 
