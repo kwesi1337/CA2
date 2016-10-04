@@ -15,9 +15,7 @@
             <property name="javax.persistence.jdbc.user" value="seinMutter"/>
             <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
             <property name="javax.persistence.jdbc.password" value="seinMann"/>
-            <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
-            <property name="javax.persistence.schema-generation.create-source" value="metadata-then-script"/>
-            <property name="javax.persistence.sql-load-script-source" value="scripts/populateZip.sql"/>
+            <property name="javax.persistence.schema-generation.database.action" value="create"/>
         </properties>
     </persistence-unit>
 </persistence>
