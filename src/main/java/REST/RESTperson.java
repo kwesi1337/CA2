@@ -34,7 +34,7 @@ import javax.ws.rs.POST;
 /**
  * REST Web Service
  *
- * @author máníàN
+ * @author Legendary John
  */
 @Path("person")
 public class RESTperson
