@@ -113,7 +113,7 @@ public class Facade
         try
         {
             em.getTransaction().begin();
-            c = em.find(Person.class, cvr);
+            c = em.find(Company.class, cvr);
             em.getTransaction().commit();
             return c;
         }
@@ -123,23 +123,6 @@ public class Facade
         }    
     }
     
-    public List<Company> getCompany(int empCount)
-    {
-        EntityManager em = emf.createEntityManager();
-        
-        List<Company> companies = null;
-        try
-        {
-            em.getTransaction().begin();
-            companies = em.createQuery("Select p from Person p where zipCode="+empCount).getResultList();
-            em.getTransaction().commit();
-            return companies;
-        }
-        finally
-        {
-            em.close();
-        }    
-    }
 
     public Person addPerson(Person p)
     {

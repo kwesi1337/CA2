@@ -6,7 +6,6 @@
 package entity;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -60,15 +59,15 @@ public class InfoEntity implements Serializable {
     private String email;
     @Column(name = "Person_ID")
     private Integer personId;
-    @ManyToMany(mappedBy = "infoEntityCollection")
+    @ManyToMany(mappedBy = "infoEntityList")
     private List<Hobby> hobbies;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "infoEntity")
     private Person person;
-    @OneToMany(mappedBy = "infoEntityIdCollection")
+    @OneToMany(mappedBy = "infoEntity")
     private List<Phone> phones;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "infoEntity")
     private Company company;
-    @JoinColumn(name = "address_isAddress", referencedColumnName = "idAddress")
+    @JoinColumn(name = "address", referencedColumnName = "idAddress")
     @ManyToOne(optional = false)
     private Address address;
 

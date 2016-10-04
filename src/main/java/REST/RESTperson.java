@@ -41,8 +41,7 @@ public class RESTperson
 {
 
     Gson gson = new GsonBuilder().setPrettyPrinting().create();
-    EntityManagerFactory emf = Persistence.createEntityManagerFactory("PuName");
-    Facade fac = new Facade(emf);
+    Facade fac;
  
     
     /**
@@ -50,6 +49,7 @@ public class RESTperson
      */
     public RESTperson()
     {
+         fac = new Facade( Persistence.createEntityManagerFactory( "REST1PU" ) );
     }
 
     /**
