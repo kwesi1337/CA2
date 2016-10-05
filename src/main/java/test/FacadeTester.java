@@ -18,7 +18,7 @@ public class FacadeTester
     {
         
         Facade ft = new Facade( Persistence.createEntityManagerFactory( "CA2pu" ) );
-        Person p = new Person( "Work", "plox", null);
+        Person p = new Person( "Work", "plox");
         Person found = ft.addPerson(p);
         System.out.println("asdasdasd" + found); // Should read out entity.Student something something.
         

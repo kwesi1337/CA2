@@ -6,152 +6,64 @@
 package entity;
 
 import java.io.Serializable;
-import javax.persistence.Basic;
-import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 /**
  *
  * @author josephawwal
  */
+
 @Entity
-@Table(name = "phone")
-@XmlRootElement
-@NamedQueries(
-{
-    @NamedQuery(name = "Phone.findAll", query = "SELECT p FROM Phone p"),
-    @NamedQuery(name = "Phone.findByIdPhone", query = "SELECT p FROM Phone p WHERE p.idPhone = :idPhone"),
-    @NamedQuery(name = "Phone.findByDescription", query = "SELECT p FROM Phone p WHERE p.description = :description"),
-    @NamedQuery(name = "Phone.findByNumber", query = "SELECT p FROM Phone p WHERE p.number = :number")
-})
+
 public class Phone implements Serializable
 {
+@Id
+private String number;
 
-    private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "idPhone")
-    private Integer idPhone;
-    @Size(max = 255)
-    @Column(name = "description")
-    private String description;
-    @Column(name = "number")
-    private String number;
-    @JoinColumn(name = "InfoEntity_idInfoEntity", referencedColumnName = "ID")
-    @ManyToOne
-    private InfoEntity infoEntity;
+private String description;
 
-    public Phone()
-    {
+@ManyToOne(fetch = FetchType.LAZY)
+private InfoEntity infoEntity;
 
-    }
 
-    public Phone(String description, String number, InfoEntity infoEntity)
-    {
+public Phone(){
+    
+    
+}
 
-        this.description = description;
-        this.number = number;
-        this.infoEntity = infoEntity;
-    }
+public Phone(String number, String description){
+    
+    this.number = number;
+    this.description = description;
+}
 
-    public Phone(Integer idPhone)
-    {
-
-        this.idPhone = idPhone;
-    }
-
-    public Integer getIdPhone()
-    {
-        return idPhone;
-    }
-
-    public void setIdPhone(Integer idPhone)
-    {
-        this.idPhone = idPhone;
-    }
-
-    public String getDescription()
-    {
-        return description;
-    }
-
-    public void setDescription(String description)
-    {
-        this.description = description;
-    }
-
-    public String getNumber()
-    {
+    public String getNumber() {
         return number;
     }
 
-    public void setNumber(String number)
-    {
+    public void setNumber(String number) {
         this.number = number;
     }
 
-    public InfoEntity getInfoEntity()
-    {
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public InfoEntity getInfoEntity() {
         return infoEntity;
     }
 
-    public void setInfoEntity(InfoEntity infoEntity)
-    {
+    public void setInfoEntity(InfoEntity infoEntity) {
         this.infoEntity = infoEntity;
     }
 
-    public Long getId()
-    {
-        return id;
-    }
 
-    public void setId(Long id)
-    {
-        this.id = id;
-    }
-
-    @Override
-    public int hashCode()
-    {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object)
-    {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Phone))
-        {
-            return false;
-        }
-        Phone other = (Phone) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id)))
-        {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public String toString()
-    {
-        return "entities.Phone[ id=" + id + " ]";
-    }
 
 }

@@ -7,82 +7,47 @@ package entity;
 
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
-import javax.persistence.Basic;
-import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 /**
  *
  * @author josephawwal
  */
 @Entity
-@Table(name = "hobby")
-@XmlRootElement
-@NamedQueries({
-      @NamedQuery(name = "Hobby.findAll", query = "SELECT h FROM Hobby h"),
-    @NamedQuery(name = "Hobby.findByIdHobby", query = "SELECT h FROM Hobby h WHERE h.idHobby = :idHobby"),
-    @NamedQuery(name = "Hobby.findByDescription", query = "SELECT h FROM Hobby h WHERE h.description = :description"),
-@NamedQuery(name = "Hobby.findByName", query = "SELECT h FROM Hobby h WHERE h.name = :name")})
-    
-    
+
+
+
 public class Hobby implements Serializable {
+@Id
 
-    private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "idHobby")
-    private Integer idHobby;
-    @Size(max = 255)
-    @Column(name = "description")
-    private String description;
-    @Size(max = 255)
-    @Column(name = "name")
-    private String name;
-    @JoinTable(name = "hobby_has_person", joinColumns = {
-       @JoinColumn(name = "Hobby_idHobby", referencedColumnName = "idHobby")}, inverseJoinColumns = {
-@JoinColumn(name = "Person_ID", referencedColumnName = "ID")})
+private String name;
+private String description;
+
+@ManyToMany(mappedBy = "hobbies")
+private List<Person> persons = new ArrayList();
+
+
+public Hobby(){
     
-    @ManyToMany
-    private List<InfoEntity> infoEntityList;
     
-    public Hobby(){
-        
+}
+
+public Hobby(String name, String description){
+    
+    this.name = name;
+    this.description = description;
+}
+
+    public String getName() {
+        return name;
     }
-    
-    public Hobby(String description, String name, List<InfoEntity> infoEntityList)
-    {
-        this.description = description;
+
+    public void setName(String name) {
         this.name = name;
-        this.infoEntityList = infoEntityList;
-    }  
-    
-    private Hobby(Integer idHobby){
-        
-        this.idHobby = idHobby;
-    }
-
-    public Integer getIdHobby() {
-        return idHobby;
-    }
-
-    public void setIdHobby(Integer idHobby) {
-        this.idHobby = idHobby;
     }
 
     public String getDescription() {
@@ -93,26 +58,13 @@ public class Hobby implements Serializable {
         this.description = description;
     }
 
-    public String getName() {
-        return name;
+    public List<Person> getPersons() {
+        return persons;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setPersons(List<Person> persons) {
+        this.persons = persons;
     }
 
-    @XmlTransient
-    public List<InfoEntity> getInfoEntityList() {
-        return infoEntityList;
-    }
 
-    public void setInfoEntityList(List<InfoEntity> infoEntityList) {
-        this.infoEntityList = infoEntityList;
-    }
-    
-
-
-
-    
-    
 }

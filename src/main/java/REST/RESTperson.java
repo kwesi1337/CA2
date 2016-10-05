@@ -26,7 +26,6 @@ import javax.ws.rs.PUT;
 import java.util.Collection;
 import java.util.List;
 import java.util.ArrayList;
-import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.POST;
@@ -49,7 +48,7 @@ public class RESTperson
      */
     public RESTperson()
     {
-         fac = new Facade( Persistence.createEntityManagerFactory( "REST1PU" ) );
+         fac = new Facade( Persistence.createEntityManagerFactory( "CA2pu" ) );
     }
 
     /**
@@ -70,8 +69,8 @@ public class RESTperson
             p1.addProperty("lastname", person.getLastName());
             p1.addProperty("email", person.getEmail());
             p1.addProperty("address", person.getAddress().getStreet() + " " + person.getAddress().getAdditionalInfo());
-            p1.addProperty("zip", person.getAddress().getCityInfoCity().getZip());
-            p1.addProperty("city", person.getAddress().getCityInfoCity().getCity());
+            p1.addProperty("zip", person.getAddress().getCityInfo().getZipCode());
+            p1.addProperty("city", person.getAddress().getCityInfo().getCity());
 
             JsonArray phone = new JsonArray();
             List<Phone> phones = person.getPhones();
@@ -117,8 +116,8 @@ public class RESTperson
 
         
         p1.add("address", address);
-        p1.addProperty("zip", person.getAddress().getCityInfoCity().getZip());
-        p1.addProperty("city", person.getAddress().getCityInfoCity().getCity());
+        p1.addProperty("zip", person.getAddress().getCityInfo().getZipCode());
+        p1.addProperty("city", person.getAddress().getCityInfo().getCity());
 
         JsonArray phone = new JsonArray();
         List<Phone> phones = person.getPhones();
@@ -229,8 +228,8 @@ public class RESTperson
 
         CityInfo city = new CityInfo();
         city.setCity(newPerson.get("city").getAsString());
-        city.setZip(newPerson.get("zip").getAsString());
-        address.setCityInfoCity(city);
+        city.setZipCode(newPerson.get("zip").getAsInt());
+        address.setCityInfo(city);
         p.setAddress(address);
 
         JsonArray phonesArr = newPerson.get("phonenumbers").getAsJsonArray();
@@ -242,7 +241,7 @@ public class RESTperson
             pho.setNumber(ph.getAsJsonObject().get("number").getAsString());
             pho.setDescription(ph.getAsJsonObject().get("description").getAsString());
             pho.setInfoEntity(p);
-            p.addPhoneNumber(pho);
+   //         p.addPhoneNumber(pho);
         }
 
         JsonArray hobbArr = newPerson.get("hobbies").getAsJsonArray();
@@ -251,12 +250,12 @@ public class RESTperson
             Hobby ho = new Hobby();
             ho.setDescription(hob.getAsJsonObject().get("description").getAsString());
             ho.setName(hob.getAsJsonObject().get("name").getAsString());
-            p.addHobby(ho);
+           // p.addHobby(ho);
         }
 
         p = fac.addPerson(p);
 
-        return getPerson(p.getId());  
+       return getPerson(p.getId());  
     }
     /**
      * PUT method for updating or creating an instance of api
@@ -281,8 +280,8 @@ public class RESTperson
 
         CityInfo city = new CityInfo();
         city.setCity(newPerson.get("city").getAsString());
-        city.setZip(newPerson.get("zip").getAsString());
-        address.setCityInfoCity(city);
+        city.setZipCode(newPerson.get("zip").getAsInt());
+        address.setCityInfo(city);
         p.setAddress(address);
 
         JsonArray phonesArr = newPerson.get("phonenumbers").getAsJsonArray();

@@ -6,72 +6,39 @@
 package entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
-import javax.persistence.Basic;
-import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 /**
  *
  * @author josephawwal
  */
 @Entity
-@Table(name = "CITYINFO")
-@XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "CityInfo.findAll", query = "SELECT c FROM CityInfo c"),
-    @NamedQuery(name = "CityInfo.findByIdCityinfo", query = "SELECT c FROM CityInfo c WHERE c.idCityInfo = :idCityInfo"),
-    @NamedQuery(name = "CityInfo.findByCity", query = "SELECT c FROM CityInfo c WHERE c.city = :city"),
-    @NamedQuery(name = "CityInfo.findByZip", query = "SELECT c FROM CityInfo c WHERE c.zip = :zip")})
 
 public class CityInfo implements Serializable {
 
-    private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "idCityInfo")
-    private Integer idCityInfo;
-    @Size(max = 255)
-    @Column(name = "City")
-    private String city;
-    @Column(name = "Zip")
-    private String zip;
-    @OneToMany(mappedBy = "cityInfoCity")
-    private List<Address> address;
-    
+    private Long id;
    
+    private int zipCode;
+    
+    private String city;
+    
+    
+    @OneToMany(mappedBy = "cityInfo")
+    private List<Address> address = new ArrayList();
+    
+    
 
-    public CityInfo() {
-
+    public int getZipCode() {
+        return zipCode;
     }
 
-    public CityInfo(String zip, String city, List<Address> address) {
-        
-        this.zip = zip;
-        this.city = city;
-        this.address = address;
-        
-    }
-
-    public Integer getIdCityInfo() {
-        return idCityInfo;
-    }
-
-    public void setIdCityInfo(Integer idCityInfo) {
-        this.idCityInfo = idCityInfo;
+    public void setZipCode(int zipCode) {
+        this.zipCode = zipCode;
     }
 
     public String getCity() {
@@ -82,58 +49,16 @@ public class CityInfo implements Serializable {
         this.city = city;
     }
 
-    public String getZip() {
-        return zip;
-    }
-
-    public void setZip(String zip) {
-        this.zip = zip;
-    }
-
-    @XmlTransient
-    public List<Address> getAddressCollection() {
+    public List<Address> getAddresses() {
         return address;
     }
 
-    public void setAddressCollection(List<Address> addressCollection) {
-        this.address = addressCollection;
+    public void setAddresses(List<Address> addresses) {
+        this.address = addresses;
     }
-  
+    
+    
 
-
-    private Long id;
-
-    public Long getId() {
-        return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
 
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof CityInfo)) {
-            return false;
-        }
-        CityInfo other = (CityInfo) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public String toString() {
-        return "entities.CityInfo[ id=" + id + " ]";
-    }
-
-}

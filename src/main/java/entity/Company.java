@@ -6,162 +6,35 @@
 package entity;
 
 import java.io.Serializable;
-import javax.persistence.Basic;
-import javax.persistence.Column;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import javax.persistence.OneToMany;
 
 /**
  *
  * @author josephawwal
  */
 @Entity
-@Table(name = "company")
-@XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "Company.findAll", query = "SELECT c FROM Company c"),
-    @NamedQuery(name = "Company.findById", query = "SELECT c FROM Company c WHERE c.id = :id"),
-    @NamedQuery(name = "Company.findByCvr", query = "SELECT c FROM Company c WHERE c.cvr = :cvr"),
-    @NamedQuery(name = "Company.findByDescription", query = "SELECT c FROM Company c WHERE c.description = :description"),
-    @NamedQuery(name = "Company.findByMarketValue", query = "SELECT c FROM Company c WHERE c.marketValue = :marketValue"),
-    @NamedQuery(name = "Company.findByName", query = "SELECT c FROM Company c WHERE c.name = :name"),
-@NamedQuery(name = "Company.findByNumEmployees", query = "SELECT c FROM Company c WHERE c.numEmployees = :numEmployees")})
-    
+
     
 public class Company implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    @Id
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "ID")
-    private Integer id;
-    @Column(name = "cvr")
-    private Integer cvr;
-    @Size(max = 255)
-    @Column(name = "description")
-    private String description;
-    @Column(name = "marketValue")
-    private Double marketValue;
-    @Size(max = 255)
-    @Column(name = "name")
-    private String name;
-    @Column(name = "numEmployees")
-    private Integer numEmployees;
-    @JoinColumn(name = "ID", referencedColumnName = "ID", insertable = false, updatable = false)
-    @OneToOne(optional = false)
-    private InfoEntity infoEntity;
+@Id
+private int zipCode;
+
+private String cityInfo;
+
+@OneToMany(mappedBy = "cityInfo")
+private List<Address> addresses = new ArrayList();
+
     
     public Company(){
         
         
     }
-    
-    public Company(Integer cvr, String description, Double marketValue, String name, Integer numEmployees, InfoEntity infoEntity){
-        
-        this.cvr = cvr;
-        this.description = description;
-        this.marketValue = marketValue;
-        this.name = name;
-        this.numEmployees = numEmployees;
-        this.infoEntity = infoEntity;
-    }
-    
-    public Company(Integer id){
-        
-        this.id = id;
-    }
 
-    public Integer getId() {
-        return id;
-    }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public Integer getCvr() {
-        return cvr;
-    }
-
-    public void setCvr(Integer cvr) {
-        this.cvr = cvr;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Double getMarketValue() {
-        return marketValue;
-    }
-
-    public void setMarketValue(Double marketValue) {
-        this.marketValue = marketValue;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Integer getNumEmployees() {
-        return numEmployees;
-    }
-
-    public void setNumEmployees(Integer numEmployees) {
-        this.numEmployees = numEmployees;
-    }
-
-    public InfoEntity getInfoEntity() {
-        return infoEntity;
-    }
-
-    public void setInfoEntity(InfoEntity infoEntity) {
-        this.infoEntity = infoEntity;
-    }
-    
-
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Company)) {
-            return false;
-        }
-        Company other = (Company) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public String toString() {
-        return "entity.Company[ id=" + id + " ]";
-    }
     
 }

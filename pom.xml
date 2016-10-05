@@ -57,6 +57,12 @@
             <version>5.1.39</version>
         </dependency>
         <dependency>
+            <groupId>com.hynnet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>4.0.0-b01</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-web-api</artifactId>
             <version>7.0</version>
