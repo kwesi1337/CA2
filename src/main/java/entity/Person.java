@@ -30,19 +30,21 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(name = "person")
 @XmlRootElement
-@NamedQueries({
+@NamedQueries(
+{
     @NamedQuery(name = "Person.findAll", query = "SELECT p FROM Person p"),
     @NamedQuery(name = "Person.findById", query = "SELECT p FROM Person p WHERE p.id = :id"),
     @NamedQuery(name = "Person.findByFirstName", query = "SELECT p FROM Person p WHERE p.firstName = :firstName"),
-@NamedQuery(name = "Person.findByLastName", query = "SELECT p FROM Person p WHERE p.lastName = :lastName")})
+    @NamedQuery(name = "Person.findByLastName", query = "SELECT p FROM Person p WHERE p.lastName = :lastName")
+})
 
+public class Person extends InfoEntity implements Serializable
+{
 
-public class Person extends InfoEntity implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @NotNull
     @Column(name = "ID")
     private Integer id;
     @Size(max = 255)
@@ -54,97 +56,115 @@ public class Person extends InfoEntity implements Serializable {
     @JoinColumn(name = "ID", referencedColumnName = "ID", insertable = false, updatable = false)
     @OneToOne(optional = false)
     private InfoEntity infoEntity;
-    
+
     @ManyToMany(mappedBy = "infoEntityList")
     private List<Hobby> hobbyList;
-    
-    public Person(){
-        
-        
+
+    public Person()
+    {
 
     }
+
+    public Person(Integer id)
+    {
+
+        this.id = id;
+    }
     
-    public Person(String firstName, String lastName, InfoEntity infoEntity){
-        
+       public Person(String firstName, String lastName)
+    {
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
+
+    public Person(String firstName, String lastName, InfoEntity infoEntity)
+    {
+
         this.firstName = firstName;
         this.lastName = lastName;
         this.infoEntity = infoEntity;
     }
-    
-    public Person(Integer id){
-        
-        this.id = id;
-    }
-    
-    
-    public Person(Integer id, String firstName, String lastName, InfoEntity infoEntity){
-        
+
+    public Person(Integer id, String firstName, String lastName, InfoEntity infoEntity)
+    {
+
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.infoEntity = infoEntity;
-        
+
     }
 
     @Override
-    public Integer getId() {
+    public Integer getId()
+    {
         return id;
     }
 
     @Override
-    public void setId(Integer id) {
+    public void setId(Integer id)
+    {
         this.id = id;
     }
 
-    public String getFirstName() {
+    public String getFirstName()
+    {
         return firstName;
     }
 
-    public void setFirstName(String firstName) {
+    public void setFirstName(String firstName)
+    {
         this.firstName = firstName;
     }
 
-    public String getLastName() {
+    public String getLastName()
+    {
         return lastName;
     }
 
-    public void setLastName(String lastName) {
+    public void setLastName(String lastName)
+    {
         this.lastName = lastName;
     }
 
-    public InfoEntity getInfoEntity() {
+    public InfoEntity getInfoEntity()
+    {
         return infoEntity;
     }
 
-    public void setInfoEntity(InfoEntity infoEntity) {
+    public void setInfoEntity(InfoEntity infoEntity)
+    {
         this.infoEntity = infoEntity;
     }
-    
-    
 
     @Override
-    public int hashCode() {
+    public int hashCode()
+    {
         int hash = 0;
         hash += (id != null ? id.hashCode() : 0);
         return hash;
     }
 
     @Override
-    public boolean equals(Object object) {
+    public boolean equals(Object object)
+    {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Person)) {
+        if (!(object instanceof Person))
+        {
             return false;
         }
         Person other = (Person) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id)))
+        {
             return false;
         }
         return true;
     }
 
     @Override
-    public String toString() {
+    public String toString()
+    {
         return "entities.Person[ id=" + id + " ]";
     }
-    
+
 }
