@@ -16,6 +16,7 @@ import entity.CityInfo;
 import entity.Hobby;
 import entity.Person;
 import entity.Phone;
+import exceptions.PersonNotFoundException;
 import facade.Facade;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Consumes;
@@ -102,7 +103,7 @@ public class RESTperson
     @GET
     @Path("complete/{id}")
     @Produces("application/json")
-    public String getPerson(@PathParam("id") int id){
+    public String getPerson(@PathParam("id") int id) throws PersonNotFoundException{
         
         Person person = fac.getPerson(id);
 
@@ -147,7 +148,7 @@ public class RESTperson
     @DELETE
     @Path("/delete/{id}")
     @Produces("application/json")
-    public String deletePerson(@PathParam("id") int id){
+    public String deletePerson(@PathParam("id") int id) throws PersonNotFoundException{
         
         Person p = fac.deletePerson(id);
         JsonObject p1 = new JsonObject();
@@ -159,7 +160,7 @@ public class RESTperson
     @GET
     @Path("/contactinfo")
     @Produces("application/json")
-    public String getInfo(){
+    public String getContactInfo(){
         
         JsonArray info = new JsonArray();
         List<Person> persons = fac.getPersons();
@@ -189,7 +190,7 @@ public class RESTperson
     @GET
     @Path("contactinfo/{id}")
     @Produces("application/json")
-    public String getInfoById(@PathParam("id") int id){
+    public String getContactInfoById(@PathParam("id") int id) throws PersonNotFoundException{
         
         Person person = fac.getPerson(id);
         JsonObject out = new JsonObject();
@@ -215,7 +216,7 @@ public class RESTperson
     @Path("/complete/add")
     @Consumes("application/json")
     @Produces("application/json")
-    public String addPerson(String person){
+    public String addPerson(String person) throws PersonNotFoundException{
         
         JsonObject newPerson = new JsonParser().parse(person).getAsJsonObject();
         Person p = new Person();
@@ -262,12 +263,13 @@ public class RESTperson
      * PUT method for updating or creating an instance of api
      * @param person
      * @return an HTTP response with content of the updated or created resource.
+     * @throws exceptions.PersonNotFoundException
      */
     @PUT
     @Path("/editperson")
     @Consumes("application/json")
     @Produces("application/json")
-    public String editPerson(String person)
+    public String editPerson(String person) throws PersonNotFoundException
     {
         JsonObject newPerson = new JsonParser().parse(person).getAsJsonObject();
         Person p = fac.getPerson(newPerson.get("id").getAsInt());
