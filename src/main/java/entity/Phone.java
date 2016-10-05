@@ -25,6 +25,10 @@ private String number;
 
 private String description;
 
+private String phoneNumber;
+
+
+
 @ManyToOne(fetch = FetchType.LAZY)
 private InfoEntity infoEntity;
 
@@ -33,6 +37,14 @@ public Phone(){
     
     
 }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
 
 public Phone(String number, String description){
     

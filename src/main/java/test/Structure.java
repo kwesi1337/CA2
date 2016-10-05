@@ -10,7 +10,7 @@ public class Structure
         
         
         
-        HashMap<String, Object> puproperties = new HashMap();
+       HashMap<String, Object> puproperties = new HashMap();
         
         puproperties.put("javax.persistence.sql-load-script-source", "scripts/populateZip.sql");
         

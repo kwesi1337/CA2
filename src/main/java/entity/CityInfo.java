@@ -21,18 +21,21 @@ import javax.persistence.OneToMany;
 public class CityInfo implements Serializable {
 
     @Id
-    private Long id;
-   
     private int zipCode;
     
     private String city;
     
     
-    @OneToMany(mappedBy = "cityInfo")
+    @OneToMany(mappedBy = "city")
     private List<Address> address = new ArrayList();
     
     
-
+    public CityInfo(){
+        
+        
+    }
+    
+    
     public int getZipCode() {
         return zipCode;
     }

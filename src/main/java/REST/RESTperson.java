@@ -29,6 +29,7 @@ import java.util.ArrayList;
 import javax.persistence.Persistence;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.POST;
+import javax.ws.rs.core.MediaType;
 
 /**
  * REST Web Service
@@ -57,7 +58,7 @@ public class RESTperson
      */
     @GET
     @Path("/complete")
-    @Produces("application/json")
+    @Produces(MediaType.APPLICATION_JSON)
     public String getPersons()
     {
         JsonArray result = new JsonArray();
@@ -68,9 +69,9 @@ public class RESTperson
             p1.addProperty("firstname", person.getFirstName());
             p1.addProperty("lastname", person.getLastName());
             p1.addProperty("email", person.getEmail());
-            p1.addProperty("address", person.getAddress().getStreet() + " " + person.getAddress().getAdditionalInfo());
+          p1.addProperty("address", person.getAddress().getStreet() + " " + person.getAddress().getAdditionalInfo());
             p1.addProperty("zip", person.getAddress().getCityInfo().getZipCode());
-            p1.addProperty("city", person.getAddress().getCityInfo().getCity());
+           p1.addProperty("city", person.getAddress().getCityInfo().getCity());
 
             JsonArray phone = new JsonArray();
             List<Phone> phones = person.getPhones();

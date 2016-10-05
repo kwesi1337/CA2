@@ -67,7 +67,7 @@ public class InfoEntity implements Serializable {
         this.address = address;
     }
     
-    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.DETACH, CascadeType.PERSIST})
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST})
     private Address address;
     
     

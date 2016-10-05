@@ -25,10 +25,20 @@ public class Person extends InfoEntity implements Serializable
     
     private String firstName;
     private String lastName;
+    private String phoneNum;
+    
     
     @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.PERSIST})
 
     private List<Hobby> hobbies = new ArrayList();
+
+    public String getPhoneNum() {
+        return phoneNum;
+    }
+
+    public void setPhoneNum(String phoneNum) {
+        this.phoneNum = phoneNum;
+    }
     
     public Person(){
         
