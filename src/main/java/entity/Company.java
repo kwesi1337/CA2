@@ -18,12 +18,20 @@ import javax.persistence.Id;
     
 public class Company extends InfoEntity  {
 
-
+private String name;
 private String city;
 private String description;
 private String cvr;
 private int numEmployees;
 private int marketValue;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public String getCity() {
         return city;
