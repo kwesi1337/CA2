@@ -8,9 +8,7 @@ package REST;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import entity.Company;
 import entity.Phone;
 import exceptions.CompanyNotFoundException;
@@ -20,9 +18,8 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
-import javax.ws.rs.PUT;
-import java.util.Collection;
 import java.util.List;
+import java.util.ArrayList;
 import javax.persistence.Persistence;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.POST;
@@ -178,6 +175,25 @@ public class RESTcompany
         }
         
         return gson.toJson(obj);
+    }
+    
+    @GET
+    @Path("employees/{number}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String getCompaniesByEmp(@PathParam("number") int number){
+        
+        List<Company> c1 = fac.getCompaniesByEmp(number);
+        List<JsonObject> jsonList = new ArrayList();
+        
+        for (Company c2 : c1) {
+            JsonObject job = new JsonObject();
+            job.addProperty("id", c2.getId());
+            job.addProperty("name", c2.getName());
+            job.addProperty("email", c2.getEmail());
+            
+            jsonList.add(job);
+        }
+        return gson.toJson(jsonList);
     }
     
     @POST
