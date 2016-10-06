@@ -6,10 +6,13 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
+    
 public class Facade
 {
 
+    
     EntityManagerFactory emf;
 
     public Facade()
@@ -171,7 +174,26 @@ public class Facade
         }
     }
 
-    public Company getCompany(int cvr)
+    public Company getCompanyById(int id)
+    {
+        EntityManager em = emf.createEntityManager();
+
+        Company c = null;
+
+        try
+        {
+            em.getTransaction().begin();
+            c = em.find(Company.class, id);
+            em.getTransaction().commit();
+            return c;
+        }
+        finally
+        {
+            em.close();
+        }
+    }
+    
+    public Company getCompanyByCvr(int cvr)
     {
         EntityManager em = emf.createEntityManager();
 
@@ -206,7 +228,8 @@ public class Facade
         }
     }
 
-     public Company getCompany(String phoneNumber) {
+    public Company getCompanyByPhone(String phoneNumber) 
+    {
         EntityManager em = emf.createEntityManager();
         
         Company c = null;
@@ -218,7 +241,60 @@ public class Facade
             c = (Company) q.getSingleResult();
             
             return c;
+            
         } finally {
+            em.close();
+        }
+    }
+     
+    public List<Company> getCompaniesByEmp(int number)
+    {
+        EntityManager em = emf.createEntityManager();
+        
+        List<Company> c = null;
+        try{
+            
+            TypedQuery<Company> q = em.createQuery("select c from Company c where c.numEmployees >=" + number, Company.class);
+            q.setParameter("number", number);
+            
+            c = q.getResultList();
+            
+            return c;
+        } finally {
+            em.close();
+        }
+    }
+    
+    public Company addCompany(Company c) 
+    {
+        EntityManager em = emf.createEntityManager();
+
+        try {
+            em.getTransaction().begin();
+            em.persist(c);
+            em.getTransaction().commit();
+            
+            return c;
+            
+        } finally {
+            em.close();
+        }
+    }
+    
+    public Company deleteCompany(int id)
+    {
+        EntityManager em = emf.createEntityManager();
+
+        try
+        {
+            em.getTransaction().begin();
+            Company c = em.find(Company.class, id);
+            em.remove(c);
+            em.getTransaction().commit();
+            return c;
+        }
+        finally
+        {
             em.close();
         }
     }
