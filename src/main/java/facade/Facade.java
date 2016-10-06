@@ -5,6 +5,7 @@ import entity.Company;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.Query;
 
 public class Facade
 {
@@ -211,8 +212,11 @@ public class Facade
         Company c = null;
         try{
             em.getTransaction().begin();
-            c = (Company) em.createQuery("Select c from Company c join c.phones ph where ph.phoneNumber =" + phoneNumber, Company.class);
-          
+            Query q = em.createQuery("Select c from Company c join c.phones ph where ph.phoneNumber =" + phoneNumber, Company.class);
+            q.setParameter("phoneNumber", phoneNumber);
+            
+            c = (Company) q.getSingleResult();
+            
             return c;
         } finally {
             em.close();
