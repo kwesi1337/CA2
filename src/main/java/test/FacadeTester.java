@@ -23,8 +23,6 @@ public class FacadeTester
         Person p = new Person( "Work", "plox");
         Address a = new Address();
         
-        
-        
         a.setAdditionalInfo("99");
         a.setStreet("johnarnevej");
         CityInfo cI = new CityInfo();
