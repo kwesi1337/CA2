@@ -188,5 +188,34 @@ public class Facade
             em.close();
         }
     }
+    
+    public List<Company> getCompanies()
+    {
+        EntityManager em = emf.createEntityManager();
+        
+        List<Company> c = null;
+        try{
+            em.getTransaction().begin();
+            c = em.createQuery("select c from Company c", Company.class).getResultList();
+            em.getTransaction().commit();
+            
+            return c;
+        } finally{
+            em.close();
+        }
+    }
 
+     public Company getCompany(String phoneNumber) {
+        EntityManager em = emf.createEntityManager();
+        
+        Company c = null;
+        try{
+            em.getTransaction().begin();
+            c = (Company) em.createQuery("Select c from Company c join c.phones ph where ph.phoneNumber =" + phoneNumber, Company.class);
+          
+            return c;
+        } finally {
+            em.close();
+        }
+    }
 }
