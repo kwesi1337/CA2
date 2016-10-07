@@ -39,6 +39,8 @@ public class Address implements Serializable {
    
 
     private String additionalInfo;
+    
+    private CityInfo cityInfo;
 
     @OneToMany(mappedBy = "address")
     private List<InfoEntity> infoEntities = new ArrayList<>();
@@ -51,6 +53,12 @@ public class Address implements Serializable {
 
     }
 
+    public Address(String street, String additionalInfo, CityInfo cityInfo){
+        
+        this.street = street;
+        this.additionalInfo = additionalInfo;
+        this.cityInfo = cityInfo;
+    }
     public Address(String street, String additionalInfo, CityInfo cityInfoCity, List<InfoEntity> infoEntityList) {
 
         this.street = street;

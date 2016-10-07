@@ -24,6 +24,8 @@ public class CityInfo implements Serializable {
     private int zipCode;
     
     private String city;
+    private int num;
+    private String string;
     
     
     @OneToMany(mappedBy = "city")
@@ -34,6 +36,13 @@ public class CityInfo implements Serializable {
         
         
     }
+    
+    public CityInfo(int num, String string){
+        
+        this.num = num;
+        this.string = string;
+    }
+    
     
     
     public int getZipCode() {

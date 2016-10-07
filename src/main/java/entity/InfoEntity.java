@@ -54,6 +54,12 @@ public class InfoEntity implements Serializable {
     public List<Phone> getPhones() {
         return phones;
     }
+    
+    public void addPhone(Phone phone){
+        
+        phone.setInfoEntity(this);
+        phones.add(phone);
+    }
 
     public void setPhones(List<Phone> phones) {
         this.phones = phones;

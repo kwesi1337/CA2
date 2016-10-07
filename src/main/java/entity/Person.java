@@ -75,5 +75,10 @@ public class Person extends InfoEntity implements Serializable
         this.hobbies = hobbies;
     }
     
+    public void addHobby(Hobby hobby){
+    
+    hobby.addPerson(this);
+    hobbies.add(hobby);
+}
     
 }

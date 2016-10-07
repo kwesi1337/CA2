@@ -41,7 +41,7 @@ import javax.ws.rs.core.MediaType;
 public class RESTperson
 {
 
-    Gson gson = new GsonBuilder().setPrettyPrinting().create();
+ private static Gson gson = new GsonBuilder().setPrettyPrinting().create();
     Facade fac;
  
     
@@ -309,5 +309,40 @@ public class RESTperson
         p = fac.editPerson(p);
 
         return getPerson(p.getId());
+    }
+    
+    
+    public static String getJSONFromPerson(Person person){
+        JsonObject joPerson = new JsonObject();
+        joPerson.addProperty("id", person.getId());
+        joPerson.addProperty("firstName", person.getFirstName());
+        joPerson.addProperty("lastName", person.getLastName());
+        joPerson.addProperty("email", person.getEmail());
+        joPerson.addProperty("street", person.getAddress().getStreet());
+        joPerson.addProperty("additionalInfo", person.getAddress().getAdditionalInfo());
+//        joPerson.addProperty("city", person.getAddress().getCityInfo().getCity());
+        joPerson.addProperty("zipCode", person.getAddress().getCityInfo().getZipCode());
+        
+        JsonArray jaPhone = new JsonArray();
+        for(Phone phone : person.getPhones()){
+            
+            JsonObject jso = new JsonObject();
+            jso.addProperty("number", phone.getNumber());
+            jso.addProperty("description", phone.getDescription());
+            jaPhone.add(jso);
+        }
+        
+        joPerson.add("phones", jaPhone);
+        JsonArray jaHobby = new JsonArray();
+        for (Hobby hobby : person.getHobbies()){
+            
+            JsonObject jso = new JsonObject();
+            jso.addProperty("name", hobby.getName());
+            jso.addProperty("description", hobby.getDescription());
+            jaHobby.add(jso);
+        }
+        joPerson.add("hobbies", jaHobby);
+        System.out.println("getJsonFromPerson:\n" + joPerson.toString());
+        return gson.toJson(joPerson);
     }
 }

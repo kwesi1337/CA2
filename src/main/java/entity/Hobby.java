@@ -65,6 +65,9 @@ public Hobby(String name, String description){
     public void setPersons(List<Person> persons) {
         this.persons = persons;
     }
+    public void addPerson(Person p) {
+        persons.add(p);
+}
 
 
 }
