@@ -110,7 +110,7 @@ public class RESTperson
 
     @GET
     @Path("complete/{id}")
-    @Produces("application/json")
+    @Produces(MediaType.APPLICATION_JSON)
     public String getPerson(@PathParam("id") int id) throws PersonNotFoundException
     {
 
@@ -142,11 +142,11 @@ public class RESTperson
 
         JsonArray hobby = new JsonArray();
         List<Hobby> hobbies = person.getHobbies();
-        for (Hobby h : hobbies)
+        for (Hobby hobb : hobbies)
         {
             JsonObject p2 = new JsonObject();
-            p2.addProperty("name", h.getName());
-            p2.addProperty("description", h.getDescription());
+            p2.addProperty("name", hobb.getName());
+            p2.addProperty("description", hobb.getDescription());
             hobby.add(p2);
         }
         p1.add("hobbies", hobby);
@@ -157,7 +157,7 @@ public class RESTperson
 
     @DELETE
     @Path("/delete/{id}")
-    @Produces("application/json")
+    @Produces(MediaType.APPLICATION_JSON)
     public String deletePerson(@PathParam("id") int id) throws PersonNotFoundException
     {
 
@@ -170,7 +170,7 @@ public class RESTperson
 
     @GET
     @Path("/contactinfo")
-    @Produces("application/json")
+    @Produces(MediaType.APPLICATION_JSON)
     public String getContactInfo()
     {
 
@@ -203,16 +203,16 @@ public class RESTperson
 
     @GET
     @Path("contactinfo/{id}")
-    @Produces("application/json")
+    @Produces(MediaType.APPLICATION_JSON)
     public String getContactInfoById(@PathParam("id") int id) throws PersonNotFoundException
     {
 
         Person person = fac.getPerson(id);
-        JsonObject out = new JsonObject();
-        out.addProperty("id", person.getId());
-        out.addProperty("firstname", person.getFirstName());
-        out.addProperty("lastname", person.getLastName());
-        out.addProperty("email", person.getEmail());
+        JsonObject obj = new JsonObject();
+        obj.addProperty("id", person.getId());
+        obj.addProperty("firstname", person.getFirstName());
+        obj.addProperty("lastname", person.getLastName());
+        obj.addProperty("email", person.getEmail());
 
         JsonArray phone = new JsonArray();
         Collection<Phone> phones = person.getPhones();
@@ -223,15 +223,15 @@ public class RESTperson
             p2.addProperty("description", p.getDescription());
             phone.add(p2);
         }
-        out.add("phonenumbers", phone);
+        obj.add("phonenumbers", phone);
 
-        return gson.toJson(out);
+        return gson.toJson(obj);
     }
 
     @POST
     @Path("/complete/add")
-    @Consumes("application/json")
-    @Produces("application/json")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
     public String addPerson(String person) throws PersonNotFoundException
     {
 
@@ -266,11 +266,11 @@ public class RESTperson
 
         JsonArray hobbArr = newPerson.get("hobbies").getAsJsonArray();
 
-        for (JsonElement hob : hobbArr)
+        for (JsonElement hobb : hobbArr)
         {
-            Hobby ho = new Hobby();
-            ho.setDescription(hob.getAsJsonObject().get("description").getAsString());
-            ho.setName(hob.getAsJsonObject().get("name").getAsString());
+            Hobby hob = new Hobby();
+            hob.setDescription(hobb.getAsJsonObject().get("description").getAsString());
+            hob.setName(hobb.getAsJsonObject().get("name").getAsString());
             // p.addHobby(ho);
         }
 
@@ -288,27 +288,27 @@ public class RESTperson
      */
     @PUT
     @Path("/editperson")
-    @Consumes("application/json")
-    @Produces("application/json")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
     public String editPerson(String person) throws PersonNotFoundException
     {
-        JsonObject newPerson = new JsonParser().parse(person).getAsJsonObject();
-        Person p = fac.getPerson(newPerson.get("id").getAsInt());
-        p.setFirstName(newPerson.get("firstname").getAsString());
-        p.setLastName(newPerson.get("lastname").getAsString());
-        p.setEmail(newPerson.get("email").getAsString());
+        JsonObject editPerson = new JsonParser().parse(person).getAsJsonObject();
+        Person p = fac.getPerson(editPerson.get("id").getAsInt());
+        p.setFirstName(editPerson.get("firstname").getAsString());
+        p.setLastName(editPerson.get("lastname").getAsString());
+        p.setEmail(editPerson.get("email").getAsString());
         Address address = p.getAddress();
 
-        address.setAdditionalInfo(newPerson.getAsJsonObject("address").get("additionalinfo").getAsString());
-        address.setStreet(newPerson.getAsJsonObject("address").get("street").getAsString());
+        address.setAdditionalInfo(editPerson.getAsJsonObject("address").get("additionalinfo").getAsString());
+        address.setStreet(editPerson.getAsJsonObject("address").get("street").getAsString());
 
         CityInfo city = new CityInfo();
-        city.setCity(newPerson.get("city").getAsString());
-        city.setZipCode(newPerson.get("zip").getAsInt());
+        city.setCity(editPerson.get("city").getAsString());
+        city.setZipCode(editPerson.get("zip").getAsInt());
         address.setCityInfo(city);
         p.setAddress(address);
 
-        JsonArray phonesArr = newPerson.get("phonenumbers").getAsJsonArray();
+        JsonArray phonesArr = editPerson.get("phonenumbers").getAsJsonArray();
 
         JsonElement ph = phonesArr.get(0);
         Phone pho = p.getPhones().get(0);
@@ -319,11 +319,11 @@ public class RESTperson
         phones.add(pho);
         p.setPhones(phones);
 
-        JsonArray hobbArr = newPerson.get("hobbies").getAsJsonArray();
-        JsonElement hob = hobbArr.get(0);
-        Hobby ho = p.getHobbies().get(0);
-        ho.setDescription(hob.getAsJsonObject().get("description").getAsString());
-        ho.setName(hob.getAsJsonObject().get("name").getAsString());
+        JsonArray hobbArr = editPerson.get("hobbies").getAsJsonArray();
+        JsonElement hobb = hobbArr.get(0);
+        Hobby hob = p.getHobbies().get(0);
+        hob.setDescription(hobb.getAsJsonObject().get("description").getAsString());
+        hob.setName(hobb.getAsJsonObject().get("name").getAsString());
 
         p = fac.editPerson(p);
 
