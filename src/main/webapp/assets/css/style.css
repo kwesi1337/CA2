@@ -8,14 +8,35 @@ and open the template in the editor.
     Author     : olls
 */
 
-table {
-    border-collapse: collapse;
-    width: 80%;
-}
 
 th, td {
-    text-align: left;
+    text-align: center;
     padding: 8px;
 }
 
-tr:nth-child(even){background-color: #f2f2f2}
+tr:nth-child(uneven){background-color: #f2f2f2}
+
+.button-table
+{    
+    background-color: transparent; /* make the button transparent */
+    background-repeat: no-repeat;  /* make the background image appear only once */
+    background-position: 0px 0px;  /* equivalent to 'top left' */
+    cursor: pointer;        /* make the cursor like hovering over an <a> element */
+    height: 38px;           /* make this the size of your image */
+    padding-right: 16px;     /* make text start to the right of the image */
+    display:block;
+}
+.button-table1
+{    
+    background-color: transparent; /* make the button transparent */
+    background-repeat: no-repeat;  /* make the background image appear only once */
+    background-position: 0px 0px;  /* equivalent to 'top left' */
+    cursor: pointer;        /* make the cursor like hovering over an <a> element */
+    height: 32px;           /* make this the size of your image */    /* make text start to the right of the image */
+    display:block;
+}
+
+input.checkmark
+{
+    cursor: pointer;  
+}

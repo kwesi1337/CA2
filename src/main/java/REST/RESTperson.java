@@ -41,20 +41,20 @@ import javax.ws.rs.core.MediaType;
 public class RESTperson
 {
 
- private static Gson gson = new GsonBuilder().setPrettyPrinting().create();
+    private static Gson gson = new GsonBuilder().setPrettyPrinting().create();
     Facade fac;
- 
-    
+
     /**
      * Creates a new instance of api
      */
     public RESTperson()
     {
-         fac = new Facade( Persistence.createEntityManagerFactory( "CA2pu" ) );
+        fac = new Facade(Persistence.createEntityManagerFactory("CA2pu"));
     }
 
     /**
      * Retrieves representation of an instance of REST.RESTperson
+     *
      * @return an instance of java.lang.String
      */
     @GET
@@ -64,19 +64,27 @@ public class RESTperson
     {
         JsonArray result = new JsonArray();
         List<Person> persons = fac.getPersons();
-        for (Person person : persons) {
+        for (Person person : persons)
+        {
             JsonObject p1 = new JsonObject();
             p1.addProperty("id", person.getId());
             p1.addProperty("firstname", person.getFirstName());
             p1.addProperty("lastname", person.getLastName());
             p1.addProperty("email", person.getEmail());
-          p1.addProperty("address", person.getAddress().getStreet() + " " + person.getAddress().getAdditionalInfo());
+            //p1.addProperty("address", person.getAddress().getStreet() + " " + person.getAddress().getAdditionalInfo());
+            JsonObject address = new JsonObject();
+            address.addProperty("street", person.getAddress().getStreet());
+            address.addProperty("additionalinfo", person.getAddress().getAdditionalInfo());
+
+            p1.add("address", address);
+
             p1.addProperty("zip", person.getAddress().getCityInfo().getZipCode());
-           p1.addProperty("city", person.getAddress().getCityInfo().getCity());
+            p1.addProperty("city", person.getAddress().getCityInfo().getCity());
 
             JsonArray phone = new JsonArray();
             List<Phone> phones = person.getPhones();
-            for (Phone p : phones) {
+            for (Phone p : phones)
+            {
                 JsonObject p2 = new JsonObject();
                 p2.addProperty("number", p.getNumber());
                 p2.addProperty("description", p.getDescription());
@@ -86,7 +94,8 @@ public class RESTperson
 
             JsonArray hobby = new JsonArray();
             List<Hobby> hobbies = person.getHobbies();
-            for (Hobby h : hobbies) {
+            for (Hobby h : hobbies)
+            {
                 JsonObject p2 = new JsonObject();
                 p2.addProperty("name", h.getName());
                 p2.addProperty("description", h.getDescription());
@@ -99,12 +108,12 @@ public class RESTperson
         return gson.toJson(result);
     }
 
-    
     @GET
     @Path("complete/{id}")
     @Produces("application/json")
-    public String getPerson(@PathParam("id") int id) throws PersonNotFoundException{
-        
+    public String getPerson(@PathParam("id") int id) throws PersonNotFoundException
+    {
+
         Person person = fac.getPerson(id);
 
         JsonObject p1 = new JsonObject();
@@ -116,14 +125,14 @@ public class RESTperson
         address.addProperty("street", person.getAddress().getStreet());
         address.addProperty("additionalinfo", person.getAddress().getAdditionalInfo());
 
-        
         p1.add("address", address);
         p1.addProperty("zip", person.getAddress().getCityInfo().getZipCode());
         p1.addProperty("city", person.getAddress().getCityInfo().getCity());
 
         JsonArray phone = new JsonArray();
         List<Phone> phones = person.getPhones();
-        for (Phone p : phones) {
+        for (Phone p : phones)
+        {
             JsonObject p2 = new JsonObject();
             p2.addProperty("number", p.getNumber());
             p2.addProperty("description", p.getDescription());
@@ -133,7 +142,8 @@ public class RESTperson
 
         JsonArray hobby = new JsonArray();
         List<Hobby> hobbies = person.getHobbies();
-        for (Hobby h : hobbies) {
+        for (Hobby h : hobbies)
+        {
             JsonObject p2 = new JsonObject();
             p2.addProperty("name", h.getName());
             p2.addProperty("description", h.getDescription());
@@ -142,29 +152,32 @@ public class RESTperson
         p1.add("hobbies", hobby);
 
         return gson.toJson(p1);
-        
+
     }
-    
+
     @DELETE
     @Path("/delete/{id}")
     @Produces("application/json")
-    public String deletePerson(@PathParam("id") int id) throws PersonNotFoundException{
-        
+    public String deletePerson(@PathParam("id") int id) throws PersonNotFoundException
+    {
+
         Person p = fac.deletePerson(id);
         JsonObject p1 = new JsonObject();
         p1.addProperty("name", p.getFirstName() + " " + p.getLastName());
-        
+
         return gson.toJson(p1);
     }
-    
+
     @GET
     @Path("/contactinfo")
     @Produces("application/json")
-    public String getContactInfo(){
-        
+    public String getContactInfo()
+    {
+
         JsonArray info = new JsonArray();
         List<Person> persons = fac.getPersons();
-        for (Person person : persons) {
+        for (Person person : persons)
+        {
             JsonObject p1 = new JsonObject();
             p1.addProperty("id", person.getId());
             p1.addProperty("firstname", person.getFirstName());
@@ -173,7 +186,8 @@ public class RESTperson
 
             JsonArray phone = new JsonArray();
             Collection<Phone> phones = person.getPhones();
-            for (Phone p : phones) {
+            for (Phone p : phones)
+            {
                 JsonObject p2 = new JsonObject();
                 p2.addProperty("number", p.getNumber());
                 p2.addProperty("description", p.getDescription());
@@ -184,14 +198,15 @@ public class RESTperson
             info.add(p1);
         }
         return gson.toJson(info);
-        
+
     }
-    
+
     @GET
     @Path("contactinfo/{id}")
     @Produces("application/json")
-    public String getContactInfoById(@PathParam("id") int id) throws PersonNotFoundException{
-        
+    public String getContactInfoById(@PathParam("id") int id) throws PersonNotFoundException
+    {
+
         Person person = fac.getPerson(id);
         JsonObject out = new JsonObject();
         out.addProperty("id", person.getId());
@@ -201,7 +216,8 @@ public class RESTperson
 
         JsonArray phone = new JsonArray();
         Collection<Phone> phones = person.getPhones();
-        for (Phone p : phones) {
+        for (Phone p : phones)
+        {
             JsonObject p2 = new JsonObject();
             p2.addProperty("number", p.getNumber());
             p2.addProperty("description", p.getDescription());
@@ -211,13 +227,14 @@ public class RESTperson
 
         return gson.toJson(out);
     }
-    
+
     @POST
     @Path("/complete/add")
     @Consumes("application/json")
     @Produces("application/json")
-    public String addPerson(String person) throws PersonNotFoundException{
-        
+    public String addPerson(String person) throws PersonNotFoundException
+    {
+
         JsonObject newPerson = new JsonParser().parse(person).getAsJsonObject();
         Person p = new Person();
         p.setFirstName(newPerson.get("firstname").getAsString());
@@ -236,31 +253,35 @@ public class RESTperson
 
         JsonArray phonesArr = newPerson.get("phonenumbers").getAsJsonArray();
 
-        for (JsonElement ph : phonesArr) {
+        for (JsonElement ph : phonesArr)
+        {
             Phone pho = new Phone();
             System.out.println(ph.getAsJsonObject().get("number").getAsString());
             System.out.println(ph.getAsJsonObject().get("description").getAsString());
             pho.setNumber(ph.getAsJsonObject().get("number").getAsString());
             pho.setDescription(ph.getAsJsonObject().get("description").getAsString());
             pho.setInfoEntity(p);
-   //         p.addPhoneNumber(pho);
+            //         p.addPhoneNumber(pho);
         }
 
         JsonArray hobbArr = newPerson.get("hobbies").getAsJsonArray();
 
-        for (JsonElement hob : hobbArr) {
+        for (JsonElement hob : hobbArr)
+        {
             Hobby ho = new Hobby();
             ho.setDescription(hob.getAsJsonObject().get("description").getAsString());
             ho.setName(hob.getAsJsonObject().get("name").getAsString());
-           // p.addHobby(ho);
+            // p.addHobby(ho);
         }
 
         p = fac.addPerson(p);
 
-       return getPerson(p.getId());  
+        return getPerson(p.getId());
     }
+
     /**
      * PUT method for updating or creating an instance of api
+     *
      * @param person
      * @return an HTTP response with content of the updated or created resource.
      * @throws exceptions.PersonNotFoundException
@@ -298,21 +319,19 @@ public class RESTperson
         phones.add(pho);
         p.setPhones(phones);
 
-
         JsonArray hobbArr = newPerson.get("hobbies").getAsJsonArray();
         JsonElement hob = hobbArr.get(0);
         Hobby ho = p.getHobbies().get(0);
         ho.setDescription(hob.getAsJsonObject().get("description").getAsString());
         ho.setName(hob.getAsJsonObject().get("name").getAsString());
 
-
         p = fac.editPerson(p);
 
         return getPerson(p.getId());
     }
-    
-    
-    public static String getJSONFromPerson(Person person){
+
+    public static String getJSONFromPerson(Person person)
+    {
         JsonObject joPerson = new JsonObject();
         joPerson.addProperty("id", person.getId());
         joPerson.addProperty("firstName", person.getFirstName());
@@ -322,20 +341,22 @@ public class RESTperson
         joPerson.addProperty("additionalInfo", person.getAddress().getAdditionalInfo());
 //        joPerson.addProperty("city", person.getAddress().getCityInfo().getCity());
         joPerson.addProperty("zipCode", person.getAddress().getCityInfo().getZipCode());
-        
+
         JsonArray jaPhone = new JsonArray();
-        for(Phone phone : person.getPhones()){
-            
+        for (Phone phone : person.getPhones())
+        {
+
             JsonObject jso = new JsonObject();
             jso.addProperty("number", phone.getNumber());
             jso.addProperty("description", phone.getDescription());
             jaPhone.add(jso);
         }
-        
+
         joPerson.add("phones", jaPhone);
         JsonArray jaHobby = new JsonArray();
-        for (Hobby hobby : person.getHobbies()){
-            
+        for (Hobby hobby : person.getHobbies())
+        {
+
             JsonObject jso = new JsonObject();
             jso.addProperty("name", hobby.getName());
             jso.addProperty("description", hobby.getDescription());
