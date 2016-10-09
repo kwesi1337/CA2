@@ -9,6 +9,7 @@
         <title>CA2 - A - Group 7</title>
 
         <!-- Bootstrap core CSS -->
+
         <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
         <link href="assets/css/bootstrap.css" rel="stylesheet" type="text/css">
 
@@ -16,6 +17,7 @@
         <link href="assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet" type="text/css">
 
         <!-- Custom styles for this template -->
+        <link href="assets/css/main.css" rel="stylesheet">
         <link href="assets/css/dashboard.css" rel="stylesheet">
         <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
         <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
@@ -25,11 +27,12 @@
           <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
           <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
         <![endif]-->
+        <link href="assets/css/DataTables.css" rel="stylesheet" type="text/css"/>
         <link href="assets/css/style.css" rel="stylesheet" type="text/css"/>
+
     </head>
 
     <body>
-
         <nav class="navbar navbar-inverse navbar-fixed-top">
             <div class="container-fluid">
                 <div class="navbar-header">
@@ -39,46 +42,45 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="#">CA2</a>
+                    <a class="navbar-brand" href="index.html">CA2</a>
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a href="#">Dashboard</a></li>
-                        <li><a href="#">Settings</a></li>
-                        <li><a href="#">Profile</a></li>
-                        <li><a href="#">Help</a></li>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="documentation.html">Documentation</a></li>
                     </ul>
-                    <form class="navbar-form navbar-right">
-                        <input type="text" class="form-control" placeholder="Search...">
-                    </form>
                 </div>
             </div>
         </nav>
 
         <div class="container-fluid">
 
-            <h1 class="page-header">DAT - A - Group 7</h1>
 
-            <div class="row placeholders">
+            <div id="class">
+                <h1 class="page-header">DAT - A - SEM 3</h1>
+            </div>
+            <div id= "group" align="center"><font size="26" > Gruppe 7 </font>
+            </div>
+            <div id="authors" class="row placeholders">
                 <div class="col-xs-6 col-sm-3 placeholder">
                     <img src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail">
                     <h4>Benjamin Kann</h4>
-                    <span class="text-muted">Something</span>
+                    <span class="text-muted"></span>
                 </div>
                 <div class="col-xs-6 col-sm-3 placeholder">
                     <img src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail">
                     <h4>Henrik Christiansen</h4>
-                    <span class="text-muted">Something</span>
+                    <span class="text-muted"></span>
                 </div>
                 <div class="col-xs-6 col-sm-3 placeholder">
                     <img src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail">
                     <h4>Jakob Jørgensen</h4>
-                    <span class="text-muted">Something</span>
+                    <span class="text-muted"></span>
                 </div>
                 <div class="col-xs-6 col-sm-3 placeholder">
                     <img src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail">
                     <h4>Joseph Awwal</h4>
-                    <span class="text-muted">Something</span>
+                    <span class="text-muted"></span>
                 </div>
             </div>
 
@@ -95,14 +97,12 @@
                         </td>
                     </tr>
                 </table>
-                
-                <table id="TablePersons" class="table table-striped">
-                    <tbody>
-                        <tr><th>ID</th><th>First name</th><th>Last name</th><th>Street</th><th>Zipcode</th><th>City</th><th>DELETE ROW</th></tr><tr><td>1</td><td>Work</td><td>plox</td><td>johnarnevej 99</td><td>2650</td><td>lyngby</td></tr>
-                    </tbody>
+
+
+                <table id="TablePersons" class="display">
+                    <tr><th>ID</th><th>First name</th><th>Last name</th><th>Street</th><th>Zipcode</th><th>City</th><th>DELETE ROW</th></tr><tr><td>1</td><td>Work</td><td>plox</td><td>johnarnevej 99</td><td>2650</td><td>lyngby</td></tr>
                 </table>
                 <div id="personBtns">
-                    
                 </div>
 
                 <p> <font size="5"> Company table </font> </p>
@@ -116,24 +116,55 @@
                         </td>
                     </tr>
                 </table>
-             
+
                 <table id="TableCompanies" class="table table-striped">
                     <tbody>
                         <tr><th>SELECT</th><th>ID</th><th>Company</th><th>Description</th><th>Marketvalue</th><th>Employees</th><th>City</th></tr>
                     </tbody>
                 </table>
                 <div id="companyBtns">
-                    
                 </div>
             </div>
         </div>
 
+        <!-- +++++ Footer Section +++++ -->
+
+        <div id="footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-4">
+                        <h4>Our home</h4>
+                        <p>
+                            Some Address 123,<br/>
+                            +45 1234 5678, <br/>
+                            Hvidovre, Denmark.
+                        </p>
+                    </div><!-- /col-lg-4 -->
+
+                    <div class="col-lg-4">
+                        <h4>My Links</h4>
+                        <p>
+                            <a href="#">Dribbble</a><br/>
+                            <a href="#">Twitter</a><br/>
+                            <a href="#">Facebook</a>
+                        </p>
+                    </div><!-- /col-lg-4 -->
+
+                    <div class="col-lg-4">
+                        <h4>Bootstrap</h4>
+                        <p><a href="https://startbootstrap.com/">Link to bootsrap website.</a></p>
+                    </div><!-- /col-lg-4 -->
+
+                </div>
+
+            </div>
+        </div>
 
         <!-- Bootstrap core JavaScript
         ================================================== -->
         <!-- Placed at the end of the document so the pages load faster -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-        <script>window.jQuery || document.write('<script src="assets/javascript/jquery.min.js"><\/script>')</script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>´
+        <script src="assets/javascript/jquery.min.js" type="text/javascript"></script>
         <script src="assets/javascript/bootstrap.min.js"></script>
 
         <!-- Just to make our placeholder images work. Don't actually copy the next line! -->
@@ -142,6 +173,7 @@
         <script src="assets/javascript/ie10-viewport-bug-workaround.js"></script>
         <script src="assets/javascript/rest.js" type="text/javascript"></script>
 
+        <script type="text/javascript" charset="utf-8" src="//cdn.datatables.net/1.10.12/js/jquery.dataTables.js"></script>
 
     </body>
 </html>

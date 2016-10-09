@@ -10,11 +10,15 @@ and open the template in the editor.
 
 
 th, td {
-    text-align: center;
-    padding: 8px;
+    font-size: 150%;
 }
 
 tr:nth-child(uneven){background-color: #f2f2f2}
+
+table
+{
+    align-content: center;
+}
 
 .button-table
 {    
@@ -32,11 +36,39 @@ tr:nth-child(uneven){background-color: #f2f2f2}
     background-repeat: no-repeat;  /* make the background image appear only once */
     background-position: 0px 0px;  /* equivalent to 'top left' */
     cursor: pointer;        /* make the cursor like hovering over an <a> element */
-    height: 32px;           /* make this the size of your image */    /* make text start to the right of the image */
+    height: 56px;           /* make this the size of your image */    /* make text start to the right of the image */
+    display:compact;
+    font-size: 150%;
+
+}
+.button-table2
+{    
+    background-color: transparent; /* make the button transparent */
+    background-repeat: no-repeat;  /* make the background image appear only once */
+    background-position: 0px 0px;  /* equivalent to 'top left' */
+    cursor: pointer;        /* make the cursor like hovering over an <a> element */
+    height: 46px;           /* make this the size of your image */    /* make text start to the right of the image */
     display:block;
+
+}
+
+.button-table3
+{    
+    background-color: transparent; /* make the button transparent */
+    background-repeat: no-repeat;  /* make the background image appear only once */
+    background-position: 0px 0px;  /* equivalent to 'top left' */
+    cursor: pointer;        /* make the cursor like hovering over an <a> element */
+    height: 32px;           /* make this the size of your image */    /* make text start to the right of the image */
+    display:compact;
+
 }
 
 input.checkmark
 {
     cursor: pointer;  
+}
+
+
+input[type="checkbox"] {
+    transform:scale(2, 2);
 }

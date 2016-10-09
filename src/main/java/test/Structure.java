@@ -10,8 +10,7 @@ public class Structure
         HashMap<String, Object> puproperties = new HashMap();
         
         puproperties.put("javax.persistence.sql-load-script-source", "scripts/populateZip.sql");
-        
-        Persistence.generateSchema("CA2pu", null);
-       // Persistence.generateSchema("CA2pu", puproperties);        
+ 
+       Persistence.generateSchema("CA2pu", puproperties);        
     }
 }

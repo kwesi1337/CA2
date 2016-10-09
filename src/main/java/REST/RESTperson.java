@@ -26,7 +26,6 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PUT;
 import java.util.Collection;
 import java.util.List;
-import java.util.ArrayList;
 import javax.persistence.Persistence;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.POST;
@@ -108,6 +107,12 @@ public class RESTperson
         return gson.toJson(result);
     }
 
+    /**
+     *
+     * @param id
+     * @return
+     * @throws PersonNotFoundException
+     */
     @GET
     @Path("complete/{id}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -155,6 +160,12 @@ public class RESTperson
 
     }
 
+    /**
+     *
+     * @param id
+     * @return
+     * @throws PersonNotFoundException
+     */
     @DELETE
     @Path("/delete/{id}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -168,6 +179,10 @@ public class RESTperson
         return gson.toJson(p1);
     }
 
+    /**
+     *
+     * @return
+     */
     @GET
     @Path("/contactinfo")
     @Produces(MediaType.APPLICATION_JSON)
@@ -201,6 +216,12 @@ public class RESTperson
 
     }
 
+    /**
+     *
+     * @param id
+     * @return
+     * @throws PersonNotFoundException
+     */
     @GET
     @Path("contactinfo/{id}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -228,6 +249,12 @@ public class RESTperson
         return gson.toJson(obj);
     }
 
+    /**
+     *
+     * @param person
+     * @return
+     * @throws PersonNotFoundException
+     */
     @POST
     @Path("/complete/add")
     @Consumes(MediaType.APPLICATION_JSON)
@@ -309,21 +336,27 @@ public class RESTperson
         p.setAddress(address);
 
         JsonArray phonesArr = editPerson.get("phonenumbers").getAsJsonArray();
-
-        JsonElement ph = phonesArr.get(0);
-        Phone pho = p.getPhones().get(0);
-        pho.setNumber(ph.getAsJsonObject().get("number").getAsString());
-        pho.setDescription(ph.getAsJsonObject().get("description").getAsString());
-        pho.setInfoEntity(p);
-        List<Phone> phones = new ArrayList();
-        phones.add(pho);
-        p.setPhones(phones);
+        
+        for (JsonElement ph : phonesArr)
+        {
+            Phone pho = new Phone();
+            System.out.println(ph.getAsJsonObject().get("number").getAsString());
+            System.out.println(ph.getAsJsonObject().get("description").getAsString());
+            pho.setNumber(ph.getAsJsonObject().get("number").getAsString());
+            pho.setDescription(ph.getAsJsonObject().get("description").getAsString());
+            pho.setInfoEntity(p);
+            //         p.addPhoneNumber(pho);
+        }
 
         JsonArray hobbArr = editPerson.get("hobbies").getAsJsonArray();
-        JsonElement hobb = hobbArr.get(0);
-        Hobby hob = p.getHobbies().get(0);
-        hob.setDescription(hobb.getAsJsonObject().get("description").getAsString());
-        hob.setName(hobb.getAsJsonObject().get("name").getAsString());
+        
+          for (JsonElement hobb : hobbArr)
+        {
+            Hobby hob = new Hobby();
+            hob.setDescription(hobb.getAsJsonObject().get("description").getAsString());
+            hob.setName(hobb.getAsJsonObject().get("name").getAsString());
+            // p.addHobby(ho);
+        }
 
         p = fac.editPerson(p);
 
