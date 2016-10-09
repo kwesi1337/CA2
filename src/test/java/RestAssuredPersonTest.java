@@ -6,12 +6,9 @@
 import REST.RESTperson;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-import static com.jayway.restassured.RestAssured.basePath;
-import static com.jayway.restassured.RestAssured.baseURI;
-import static com.jayway.restassured.RestAssured.defaultParser;
+import com.jayway.restassured.RestAssured;
 import static com.jayway.restassured.RestAssured.given;
+import com.jayway.restassured.http.ContentType;
 import static com.jayway.restassured.http.ContentType.JSON;
 import com.jayway.restassured.parsing.Parser;
 import entity.Address;
@@ -19,10 +16,10 @@ import entity.CityInfo;
 import entity.Hobby;
 import entity.Person;
 import entity.Phone;
-import java.util.ArrayList;
-import java.util.List;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasItems;
+import static org.hamcrest.Matchers.notNullValue;
+import static org.junit.Assert.assertNotNull;
 import org.junit.Test;
 import org.junit.BeforeClass;
 /**
