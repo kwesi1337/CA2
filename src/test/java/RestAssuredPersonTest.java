@@ -6,12 +6,9 @@
 import REST.RESTperson;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-import static com.jayway.restassured.RestAssured.basePath;
-import static com.jayway.restassured.RestAssured.baseURI;
-import static com.jayway.restassured.RestAssured.defaultParser;
+import com.jayway.restassured.RestAssured;
 import static com.jayway.restassured.RestAssured.given;
+import com.jayway.restassured.http.ContentType;
 import static com.jayway.restassured.http.ContentType.JSON;
 import com.jayway.restassured.parsing.Parser;
 import entity.Address;
@@ -19,10 +16,10 @@ import entity.CityInfo;
 import entity.Hobby;
 import entity.Person;
 import entity.Phone;
-import java.util.ArrayList;
-import java.util.List;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasItems;
+import static org.hamcrest.Matchers.notNullValue;
+import static org.junit.Assert.assertNotNull;
 import org.junit.Test;
 import org.junit.BeforeClass;
 /**
@@ -39,13 +36,46 @@ public class RestAssuredPersonTest {
     @BeforeClass
     public static void setUpClass() throws Exception {
         
-        baseURI = "http://localhost:9000";
-        defaultParser = Parser.JSON;
-        basePath = "/CA2/api/person";
+         RestAssured.baseURI = "http://localhost";
+        RestAssured.port = 9000;
+        RestAssured.basePath = "/REST1";
+        RestAssured.defaultParser = Parser.JSON;
         
     }
     
- 
+ @Test
+    public void postGetDeletePerson()
+    {
+        Person p = new Person("Kurt","Wonnegut", 12344321);
+        Person newPerson =
+        given()
+        .contentType("application/json")
+        .body(p)
+        .when().post("/api/person")
+        .as(Person.class);
+        
+        assertNotNull(newPerson.getId());
+    
+        given()
+        .contentType(ContentType.JSON)
+        .when().get("/api/person/" + newPerson.getId()).then()
+        .body("id",notNullValue())
+        .body("firstName", equalTo("Kurt"));
+    
+        given()
+        .contentType(ContentType.JSON)
+        .when().delete("/api/person/" + newPerson.getId()).then()
+        .body("firstName", equalTo("Kurt"));
+    }
+    
+        @Test
+    public void serverIsRunning()
+    {
+        given().
+        when().get().
+        then().statusCode(200);
+    }
+    
     
     @Test
     public void createPerson(){
