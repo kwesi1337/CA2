@@ -16,70 +16,101 @@ import entity.CityInfo;
 import entity.Hobby;
 import entity.Person;
 import entity.Phone;
+import facade.Facade;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasItems;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.Assert.assertNotNull;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.BeforeClass;
+
 /**
  *
  * @author josephawwal
  */
-public class RestAssuredPersonTest {
-    
+public class RestAssuredPersonTest
+{
+
     private static Gson gson = new GsonBuilder().setPrettyPrinting().create();
-    public RestAssuredPersonTest() {
+    EntityManagerFactory emf;
+    EntityManager em;
+    private static Facade facade;
+
+    public RestAssuredPersonTest()
+    {
+        emf = Persistence.createEntityManagerFactory("CA2pu");
+        em = emf.createEntityManager();
+        facade = new Facade(emf);
+
     }
-    
-    
+
     @BeforeClass
-    public static void setUpClass() throws Exception {
-        
-         RestAssured.baseURI = "http://localhost";
-        RestAssured.port = 9000;
-        RestAssured.basePath = "/REST1";
+    public static void setUpClass() throws Exception
+    {
+
+        RestAssured.baseURI = "http://localhost";
+        RestAssured.port = 8080;
+        RestAssured.basePath = "/CA2";
         RestAssured.defaultParser = Parser.JSON;
-        
+
     }
-    
- @Test
-    public void postGetDeletePerson()
+
+    @Before
+    public void setUp()
     {
-        Person p = new Person("Kurt","Wonnegut", 12344321);
-        Person newPerson =
-        given()
-        .contentType("application/json")
-        .body(p)
-        .when().post("/api/person")
-        .as(Person.class);
-        
-        assertNotNull(newPerson.getId());
-    
-        given()
-        .contentType(ContentType.JSON)
-        .when().get("/api/person/" + newPerson.getId()).then()
-        .body("id",notNullValue())
-        .body("firstName", equalTo("Kurt"));
-    
-        given()
-        .contentType(ContentType.JSON)
-        .when().delete("/api/person/" + newPerson.getId()).then()
-        .body("firstName", equalTo("Kurt"));
+        em = emf.createEntityManager();
+        em.getTransaction().begin();
+
     }
+
     
-        @Test
-    public void serverIsRunning()
-    {
-        given().
-        when().get().
-        then().statusCode(200);
+    @Test
+    public void serverIsRunning() {
+        given().when().get("http://localhost:8080/CA2/").then().statusCode(200);
     }
     
     
     @Test
-    public void createPerson(){
-        
+    public void postGetDeletePerson()
+    {
+        Person p = new Person("Kurt", "Wonnegut");
+        Person newPerson
+                = given()
+                .contentType("application/json")
+                .body(p)
+                .when().post("/api/person")
+                .as(Person.class);
+
+        assertNotNull(newPerson.getId());
+
+        given()
+                .contentType(ContentType.JSON)
+                .when().get("/api/person/" + newPerson.getId()).then()
+                .body("id", notNullValue())
+                .body("firstName", equalTo("Kurt"));
+
+        given()
+                .contentType(ContentType.JSON)
+                .when().delete("/api/person/" + newPerson.getId()).then()
+                .body("firstName", equalTo("Kurt"));
+    }
+
+//    @Test
+//    public void serverIsRunning()
+//    {
+//        given().
+//                when().get().
+//                then().statusCode(200);
+//    }
+
+    @Test
+    public void createPerson()
+    {
+
         Person p = new Person("Test", "Test123");
         p.setEmail("tobias.cbs@gmail.com");
         Phone phone1 = new Phone("123456789", "iphone");
@@ -89,29 +120,26 @@ public class RestAssuredPersonTest {
         CityInfo cityInfo = new CityInfo(2000, "Frederiksberg");
         Address address = new Address("Janusvej 4", "1tv", cityInfo);
         p.setAddress(address);
-        
-        
+
         Hobby hob1 = new Hobby("gaming", "gaming ftw");
         Hobby hob2 = new Hobby("Spisning", "spisning ftw");
-        
+
         p.addHobby(hob1);
         p.addHobby(hob2);
-        
-       given().
-               contentType(JSON).
-               body(RESTperson.getJSONFromPerson(p)).
-               when().
-               post().
-               then().
-               contentType(JSON).
-               statusCode(201).body("firstName", equalTo(p.getFirstName())).
-               body("lastName", equalTo(p.getLastName())).
-               body("hobbies.name", hasItems(p.getHobbies().get(0).getName()));
-       
-               
-        
+
+        given().
+                contentType(JSON).
+                body(RESTperson.getJSONFromPerson(p)).
+                when().
+                post().
+                then().
+                contentType(JSON).
+                statusCode(201).body("firstName", equalTo(p.getFirstName())).
+                body("lastName", equalTo(p.getLastName())).
+                body("hobbies.name", hasItems(p.getHobbies().get(0).getName()));
+
     }
- 
+
     // TODO add test methods here.
     // The methods must be annotated with annotation @Test. For example:
     //
