@@ -88,6 +88,28 @@ public class JunitTest
         
     }
     
+    
+    @Test
+    public void testHobbies()
+    {
+        boolean test=false;
+        Person p = new Person("john", "arne");
+        Hobby h = new Hobby("johnsport", "john dyrker det yo");
+        
+        h.addPerson(p);
+        
+        List<Person> ps= h.getPersons();
+        if(ps.contains(p))
+        {
+            test=true;
+        }
+        assertTrue(test);
+        
+        
+        
+        
+        
+    }
     // TODO add test methods here.
     // The methods must be annotated with annotation @Test. For example:
     //
