@@ -71,15 +71,26 @@ and open the template in the editor.
                 <div class="col-lg-4">
                 </div>
                 <div class="col-lg-4"> 
-                    <a href="assets/images/portfolio/tmpImage.jpg"><img class="img-responsive" src="assets/images/portfolio/tmpImage.jpg" alt="" /></a>
-                    <p>Our JUnit tests.</p>
+                    <a href="assets/images/testspassed.png"><img class="img-responsive" src="assets/images/portfolio/tmpImage.jpg" alt="" /></a>
+                    <p>Tryk på ovenstående billede for jUnit testresultater.</p>
                 </div>
             </div><!-- /row -->
             <div align="center">
                 <table>
                     <tr>
+                    <td>
+                        <center> <font size="7" > Testing </font></center>
+                            <p>
+                                 Vi har lavet forskellige tests; nogle med RestAssured, og andre med normal jUnit. Desværre skete der noget med Rest tests sidste dag, som vi ikke rigtigt forstår og det virker derfor ikke. 
+                                Til jUnit har vi primært fokuseret på facadetests, hvor vi prøver manuelt at tilføje, slette og finde en bruger.
+                                RestAssured tests havde primært samme fokus, men her i slutningen af projektet kan vi ikke få forbindelse.
+                            </p>
+                    </td>
+                    </tr>
+                
+                    <tr>
                         <td>
-                    <center> <font size="7" > REST API description: </font> </center>
+                    <center> <font size="7" > REST API description </font> </center>
                     <p>
                         Til <b>getPersons</b> metoden i API'en bruger vi "List" til at få vist en række af personer, som sker ved hjælp af getPersons metoden i facaden, som laver en query til databasen.
                         getPersons metoden i API'en har flere forEach loops, som itererer igennem nogle objekter og får deres værdier. Til sidst returnerer vi resultatet som et JsonArray, med gson.toJson metoden.
@@ -115,7 +126,7 @@ and open the template in the editor.
                 <table>
                     <tr>
                     <td>
-                        <center> <font size="7" > Error responses: </font></center>
+                        <center> <font size="7" > Error responses </font></center>
                             <p>
                                 Vi har defineret nogle exceptions samt mappers, som implementerer disse exceptions. 
                                 De returnerer en fejlbesked i JSON format. Vi har f.eks. brugt PersonNotFound exception, 
@@ -128,7 +139,7 @@ and open the template in the editor.
                     </tr>
                     <tr>
                     <td>
-                        <center> <font size="7" > Inheritance strategy: </font></center>
+                        <center> <font size="7" > Inheritance strategy </font></center>
                             <p>
                                 Vi har brugt "Extends" strategien, som arver egenskaberne fra en anden klasse. 
                                 Person og Company entity klasserne extender InfoEntity klassen, fordi begge klasser skal bruge de samme metoder fra InfoEntity. 
@@ -186,7 +197,7 @@ and open the template in the editor.
 
                     <div class="col-lg-4">
                         <h4>Bootstrap</h4>
-                        <p><a href="https://startbootstrap.com/">Link to bootsrap website.</a></p>
+                        <p><a href="https://startbootstrap.com/">Link to bootstrap website.</a></p>
                     </div><!-- /col-lg-4 -->
 
                 </div>
