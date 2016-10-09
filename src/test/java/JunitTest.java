@@ -51,26 +51,43 @@ public class JunitTest
     {
     }
     @Test
-    public void testGetPerson() {
+    public void testAddAndGetPerson() {
        emf = Persistence.createEntityManagerFactory("CA2pu");
         facade= new Facade(emf);
-        System.out.println("john");
+        
         int id =1; 
-        //InfoEntity iE = new InfoEntity();
+        
         facade.addPerson(new Person("john", "arne"));
         
-        //Person p = facade.getPerson(id);
+      
         List<Person> l = facade.getPersons();
         int foundId=0;
         for (Person person : l) {
             if (person.getFirstName().equalsIgnoreCase("John") && person.getLastName().equalsIgnoreCase("arne"))
             {
                 foundId = 1;
-                System.out.println("JAJA");
+                //System.out.println("JAJA");
             }
         }
         assertTrue(id==foundId);
     }
+    @Test
+    public void testDeletePerson()
+    {
+        emf = Persistence.createEntityManagerFactory("CA2pu");
+        facade= new Facade(emf);
+        Person p = new Person("john", "arne");
+        
+        facade.addPerson(p);
+        assertTrue(p.getFirstName().equalsIgnoreCase( facade.getPerson(p.getId()).getFirstName()));
+        facade.deletePerson(p.getId());
+        Person p2 = facade.getPerson(p.getId());
+        assertTrue(p2 == null);
+        
+        
+        
+    }
+    
     // TODO add test methods here.
     // The methods must be annotated with annotation @Test. For example:
     //
