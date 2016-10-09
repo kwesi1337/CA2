@@ -139,6 +139,39 @@ public class RestAssuredPersonTest
                 body("hobbies.name", hasItems(p.getHobbies().get(0).getName()));
 
     }
+    
+    @Test
+    public void testEditPerson() throws PersonNotFoundException{
+     Hobby hobby = new Hobby("Gaming", "Gaming ftw");
+     Phone phone = new Phone("40404040", "Mobiltlf");
+     CityInfo cityInfo = new CityInfo(2300, "Amager");
+     
+        address.setCityInfo(cityInfo);
+        
+        Person person = new Person("Jan", "Arne");
+        person.addHobby(hobby);
+        person.setEmail("Test@test.dk");
+        person.addPhone(phone);
+        person.setAddress(address);
+        
+        try {
+            pf.createPerson(person);
+        } catch (PhoneExistsException ex){
+            Logger.getLogger(PersonFacadeTest.class.getName()).log(LEVEL.SEVERE, null, ex);
+            
+            
+        }
+        Person p = pf.getPerson("20406080");
+        
+        p.setFirstName("ZainMutter");
+        
+        pf.editPerson(p, "20406080");
+        
+        p = pf.getPerson("20406080");
+        assertEquals(p.getFirstName(), "ZeinMan");
+        
+        
+    }
 
     // TODO add test methods here.
     // The methods must be annotated with annotation @Test. For example:
